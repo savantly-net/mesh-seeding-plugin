@@ -1,0 +1,169 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.savantly.mesh</groupId>
+	<artifactId>mesh-seeding-plugin</artifactId>
+	<version>0.0.1</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mesh.version>1.3.2</mesh.version>
+
+		<!-- We use these properties to specify the plugin manifest -->
+		<plugin.id>seeding-plugin</plugin.id>
+		<plugin.name>Seeding Plugin</plugin.name>
+		<plugin.description>A plugin that loads seed data into mesh</plugin.description>
+		<plugin.class>net.savantly.mesh.plugins.seeding.SeedingPlugin</plugin.class>
+		<plugin.version>${project.version}</plugin.version>
+		<plugin.license>ASL 2.0</plugin.license>
+		<plugin.author>savantly.net</plugin.author>
+		<plugin.inception>2020-04-30</plugin.inception>
+	</properties>
+	<parent>
+		<groupId>net.savantly</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>1.0.0-RELEASE</version>
+	</parent>
+	<url>https://github.com/savantly-net/mesh-seeding-plugin</url>
+	<scm>
+		<url>https://github.com/savantly-net/mesh-seeding-plugin</url>
+		<connection>https://github.com/savantly-net/mesh-seeding-plugin.git</connection>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/savantly-net/mesh-seeding-plugin/issues</url>
+		<system>GitHub</system>
+	</issueManagement>
+	<developers>
+		<developer>
+			<name>Jeremy Branham</name>
+			<email>jeremy@savantly.net</email>
+			<url>https://www.linkedin.com/in/jeremybranham</url>
+			<organization>Savantly.net</organization>
+			<organizationUrl>http://Savantly.net</organizationUrl>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>Apache License Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+	<!-- The dependency management section provides the versions for the needed 
+		artifacts -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.gentics.mesh</groupId>
+				<artifactId>mesh-bom</artifactId>
+				<version>${mesh.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- The mesh plugin api dependencies. Please note that these dependencies 
+			need to be set to provided -->
+		<dependency>
+			<groupId>com.gentics.mesh</groupId>
+			<artifactId>mesh-plugin-dep</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.gentics.mesh</groupId>
+			<artifactId>mesh-service-jwt-auth</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>stringtemplate</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.gentics.mesh</groupId>
+			<artifactId>mesh-test-common</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.gentics.mesh</groupId>
+			<artifactId>mesh-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<verbose>true</verbose>
+					<source>8</source>
+					<target>8</target>
+				</configuration>
+			</plugin>
+			<!--The shade plugin will generate the jar with all the needed dependencies -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<finalName>${plugin.id}</finalName>
+							<transformers>
+								<!-- We use the transformer to add the manifest properties to the 
+									jar manifest -->
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Plugin-Id>${plugin.id}</Plugin-Id>
+										<Plugin-Name>${plugin.name}</Plugin-Name>
+										<Plugin-Version>${plugin.version}</Plugin-Version>
+										<Plugin-Author>${plugin.author}</Plugin-Author>
+										<Plugin-Class>${plugin.class}</Plugin-Class>
+										<Plugin-Description>${plugin.description}</Plugin-Description>
+										<Plugin-License>${plugin.license}</Plugin-License>
+										<Plugin-Inception>${plugin.inception}</Plugin-Inception>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- The repository section is important. Otherwise you will not be able 
+		to download the artifacts -->
+	<repositories>
+		<repository>
+			<id>maven.gentics.com</id>
+			<name>Gentics Maven Repository</name>
+			<url>https://maven.gentics.com/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+</project>

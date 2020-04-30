@@ -1,0 +1,20 @@
+meshScripts:
+  test1:
+    projectName: example
+    microSchemaFiles:
+      7b28ec90585140a8a8ec905851b0a8ec: "src/test/resources/schemas/example_microschema.json"
+    schemaFiles:
+      5bdb2a9db6594a8e9b2a9db6593a8ef1: "src/test/resources/schemas/example.json"
+    nodeFiles:
+      b60a50dbe8354acd8a50dbe835bacd09: "src/test/resources/nodes/example_node1.json"
+      a59ac0b6338f42c69ac0b6338f22c646: "src/test/resources/nodes/example_node2.json"
+      73aeb52bc5344345aeb52bc5345345c1: "src/test/resources/nodes/example_node3.json"
+    roles:
+      - editor
+      - contributor
+    groups:
+      - editor
+      - contributor
+    rolesToGroups:
+      editor: editor
+      contributor: contributor

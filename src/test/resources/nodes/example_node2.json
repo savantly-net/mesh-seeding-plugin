@@ -1,0 +1,12 @@
+{
+  "parentNode" : {
+    "uuid" : "b60a50dbe8354acd8a50dbe835bacd09"
+  },
+  "schema" : {
+    "name" : "folder"
+  },
+  "language" : "en",
+  "fields" : {
+    "name" : "Sub Node"
+  }
+}

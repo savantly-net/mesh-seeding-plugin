@@ -1,0 +1,12 @@
+{
+  "parentNode" : {
+    "uuid" : "<project.uuid>"
+  },
+  "schema" : {
+    "name" : "folder"
+  },
+  "language" : "en",
+  "fields" : {
+    "name" : "profiles"
+  }
+}

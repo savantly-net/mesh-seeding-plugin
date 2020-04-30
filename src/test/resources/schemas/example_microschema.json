@@ -1,0 +1,29 @@
+{
+    "name": "example_microschema",
+    "description": "An example microschema for seeding",
+    "fields": [
+        {
+            "name": "example_date_field",
+            "type": "date",
+            "label": "Example Date",
+            "required": true
+        },
+        {
+            "name": "example_string_field",
+            "type": "string",
+            "label": "Example String",
+            "required": true
+        },
+        {
+            "name": "example_enum_field",
+            "type": "string",
+            "label": "Example string field with enum constraint",
+            "required": false,
+            "allow": [
+                "value1",
+                "value2",
+                "value3"
+            ]
+        }
+    ]
+}

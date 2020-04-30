@@ -1,0 +1,32 @@
+{
+    "name": "example_schema",
+    "container": true,
+    "autoPurge": false,
+    "description": "Example Schema with microschema dependency",
+    "displayField": "name",
+    "segmentField": "name",
+    "urlFields": [],
+    "fields": [
+        {
+            "name": "name",
+            "type": "string",
+            "label": "Name",
+            "required": true
+        },
+        {
+            "name": "example_file_field",
+            "type": "binary",
+            "label": "Example file field",
+            "required": true
+        },
+        {
+            "name": "details",
+            "type": "micronode",
+            "label": "Details",
+            "required": true,
+            "allow": [
+                "example_microschema"
+            ]
+        }
+    ]
+}
