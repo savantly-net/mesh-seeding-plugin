@@ -10,6 +10,7 @@ public class MeshScript {
 	private Map<String, String> microSchemaFiles = new HashMap<>();
 	private Map<String, String> schemaFiles = new HashMap<>();
 	private Map<String, String> nodeFiles = new HashMap<>();
+	private boolean publishNodes;
 	private String[] roles;
 	private String[] groups;
 	private Map<String, String> rolesToGroups = new HashMap<>();
@@ -34,6 +35,14 @@ public class MeshScript {
 	 */
 	public Map<String, String> getNodeFiles() {
 		return nodeFiles;
+	}
+
+	public void setPublishNodes(boolean publishNodes) {
+		this.publishNodes = publishNodes;
+	}
+
+	public boolean getPublishNodes() {
+		return publishNodes;
 	}
 
 	public void setNodeFiles(Map<String, String> nodeFiles) {
