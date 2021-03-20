@@ -13,6 +13,7 @@ import com.gentics.mesh.core.rest.group.GroupResponse;
 import com.gentics.mesh.core.rest.microschema.impl.MicroschemaCreateRequest;
 import com.gentics.mesh.core.rest.node.NodeCreateRequest;
 import com.gentics.mesh.core.rest.node.NodeResponse;
+import com.gentics.mesh.core.rest.node.PublishStatusResponse;
 import com.gentics.mesh.core.rest.project.ProjectCreateRequest;
 import com.gentics.mesh.core.rest.project.ProjectResponse;
 import com.gentics.mesh.core.rest.role.RoleCreateRequest;
@@ -177,6 +178,11 @@ public class MeshScriptProcessor {
 		String nodeString = fileBuffer.toString();
 		String processedNode = replaceVariables(nodeString, env);
 		NodeResponse result = createNode(mScript.getProjectName(), entry.getKey(), processedNode);
+		
+		if (mScript.getPublishNodes()) {
+			publishNode(mScript.getProjectName(), result.getUuid());
+		}
+
 		env.put(entry.getKey(), result);
 	}
 
@@ -189,7 +195,7 @@ public class MeshScriptProcessor {
 		// Throw an exception if the file doesn't exist
 		if (!vertx.fileSystem().existsBlocking(path)) {
 			log.error("postman collection file doesn't exist: " + path);
-			vertx.fileSystem().readDir(".", dir -> {
+			vertx.fileSystem().readDir("/", dir -> {
 				log.info("current working directory contents");
 				dir.result().forEach(s -> {
 					log.info("{}", s);
@@ -206,6 +212,13 @@ public class MeshScriptProcessor {
 		NodeCreateRequest request = JsonUtil.readValue(processedNode, NodeCreateRequest.class);
 		NodeResponse response = this.adminClient.createNode(uuid, project, request).blockingGet();
 		log.info("created node - uuid: " + response.getUuid() + ": " + response.getDisplayName());
+		return response;
+	}
+
+	private PublishStatusResponse publishNode(String project, String uuid) {
+		log.info("publishing node: " + uuid);
+		PublishStatusResponse response = this.adminClient.publishNode(project, uuid).blockingGet();
+		log.info("published node - uuid: " + uuid + ": " + project);
 		return response;
 	}
 

@@ -8,7 +8,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mesh.version>1.3.2</mesh.version>
+		<mesh.version>1.7.7</mesh.version>
 
 		<!-- We use these properties to specify the plugin manifest -->
 		<plugin.id>seeding-plugin</plugin.id>
@@ -128,7 +128,6 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<finalName>${plugin.id}</finalName>
 							<transformers>
 								<!-- We use the transformer to add the manifest properties to the 
 									jar manifest -->
